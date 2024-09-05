@@ -155,7 +155,7 @@ async function generatePDF() {
 
     const fileName = `OT ${planta} ${orden} ${date} ${company}`.toUpperCase();
 
-    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pdf = new jsPDF('p', 'mm', 'a3');
     pdf.setFontSize(8);
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
