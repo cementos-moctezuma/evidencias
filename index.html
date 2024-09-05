@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./icon.ico">
+    <title>Evidencias</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+    <div class="spinner-border" role="status" id="spinner">
+        <span class="sr-only">Loading...</span>
+    </div>
+
+    <img id="logo" src="https://www.integrity-la.com/wp-content/uploads/2016/10/Logo_Cemento_Moctezuma.png"
+        alt="Logo Cementos Moctezuma">
+    <br>
+    <h1>Evidencias</h1>
+
+    <label for="orden">
+        No Orden de Trabajo:
+        <input type="text" id="orden" name="orden" />
+        <span id="order-error" class="btn-sm btn-danger" style="display:none;">&times;</span>
+    </label>
+
+    <label for="planta">
+        Planta:
+        <select id="planta" name="planta">
+            <option value=""></option>
+            <option value="APZ">APZ</option>
+            <option value="CRT">CRT</option>
+            <option value="CRT">TPZ</option>
+        </select>
+        <span id="planta-error" class="btn-sm btn-danger" style="display:none">&times;</span>
+    </label>
+
+    <label for="date">
+        Fecha:
+        <input type="date" id="date" name="date" />
+        <span id="date-error" class="btn-sm btn-danger" style="display:none">&times;</span>
+    </label>
+
+    <label for="company">
+        Compañia:
+        <input type="text" id="company" name="company" />
+        <span id="company-error" class="btn-sm btn-danger" style="display:none">&times;</span>
+    </label>
+
+    <label for="responsible">
+        Responsable CEMOSA:
+        <input type="text" id="responsible" name="responsible" />
+        <span id="responsible-error" class="btn-sm btn-danger" style="display:none">&times;</span>
+    </label>
+
+    <label for="capture">
+        Persona que captura:
+        <input type="text" id="capture" name="capture" />
+        <span id="capture-error" class="btn-sm btn-danger" style="display:none">&times;</span>
+    </label>
+
+    <input type="file" id="imageUpload" accept="image/*" multiple style="display:none"<>
+    <button id="addImageButton">Agregar Imagen</button>
+    <div id="preview"></div>
+    <button id="generatePdfButton">Generar PDF</button>
+
+    <script src="./index.js"></script>
+</body>
+
+</html>

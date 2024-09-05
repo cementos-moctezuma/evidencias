@@ -1,0 +1,64 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+#preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#preview img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    max-height: 100px;
+}
+
+#addImageButton,
+#generatePdfButton {
+    display: inline-block;
+    margin: 10px 0;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+}
+
+#addImageButton:disabled {
+    background-color: #CCCCCC;
+    cursor: not-allowed;
+}
+
+#logo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 100px;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+.spinner-border {
+    display: none;
+    width: 3rem;
+    height: 3rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 1000;
+}
+
+table, tr, td {
+    outline: 1px solid #000;
+    padding: 5px;
+}
