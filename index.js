@@ -211,8 +211,9 @@ async function generatePDF() {
     if (confirm('¿Deseas enviar correo para la recepción de tus evidencias?')) {
         const pdfBlob = pdf.output('blob');
 
-        setTimeout(async () => {
-            await sendPdfByEmail(pdfBlob, fileName);
+        showSpinner();
+        setTimeout(() => {
+            sendPdfByEmail(pdfBlob, fileName);
             hideSpinner();
         }, 1000);
     }
@@ -226,12 +227,21 @@ function hideSpinner() {
     spinner.style.display = 'none';
 }
 
-async function sendPdfByEmail(pdfBlob, fileName) {
+function sendPdfByEmail(pdfBlob, fileName) {
+    const urlProduction = `https://jedilbertotc.somee.com/api/v1/Email/SendEmail?subject=${fileName}`;
+    const urlDevelopment = `https://localhost:7090/api/v1/Email/SendEmail?subject=${fileName}`;
     const formData = new FormData();
     formData.append('file', pdfBlob, `${fileName}.pdf`);
-    await fetch(`https://jedilbertotc.somee.com/api/v1/Email/SendEmail?subject=${fileName}`, {
+    fetch(urlProduction, {
         method: 'POST',
         body: formData,
         mode: 'no-cors'
-    });
+    })
+    .then(e => {
+        if(e) {
+            alert('Se ha enviado el correo correctamente.')
+        }
+    }).catch(() => {
+        alert('Hubo un error al enviar el correo.')
+    })
 }
