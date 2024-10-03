@@ -242,6 +242,5 @@ function sendPdfByEmail(pdfBlob, fileName) {
             alert('Se ha enviado el correo correctamente.')
         }
     }).catch(() => {
-        alert('Hubo un error al enviar el correo.')
     })
 }
