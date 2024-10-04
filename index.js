@@ -207,14 +207,24 @@ async function generatePDF() {
     responsible.value = '';
 
     pdf.save(`${fileName}.pdf`);
+    const pdfBlob = pdf.output('blob');
+    const url = URL.createObjectURL(pdfBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${fileName}.pdf`;
+    link.click();
+
+    URL.revokeObjectURL(url);
+
 
     if (confirm('¿Deseas enviar correo para la recepción de tus evidencias?')) {
-        const pdfBlob = pdf.output('blob');
         showSpinner();
         try {
             await sendPdfByEmail(pdfBlob, fileName);
             hideSpinner();
             alert('Correo enviado con éxito.');
+            const url = URL.createObjectURL(pdfBlob);
+            window.open(url);
         } catch (e) {
             hideSpinner();
             alert('Ha ocurrido un error al enviar el correo.');
@@ -239,5 +249,5 @@ async function sendPdfByEmail(pdfBlob, fileName) {
         method: 'POST',
         body: formData,
         mode: 'no-cors'
-    }).then()
+    })
 }
