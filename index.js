@@ -169,7 +169,7 @@ async function generatePDF() {
 
     const addLogo = () => {
         pdf.addImage(logo, 'PNG', margin, margin, logoWidth, logoHeight, undefined, 'FAST');
-
+        
         pdf.text(`No Orden de Trabajo: ${orden}`, margin + 45, margin + 2, { align: 'left' });
         pdf.text(`Fecha: ${date}`, margin + 45, margin + 6, { align: 'left' });
 
@@ -206,29 +206,28 @@ async function generatePDF() {
     company.value = '';
     responsible.value = '';
 
-    pdf.save(`${fileName}.pdf`);
     const pdfBlob = pdf.output('blob');
-    const url = URL.createObjectURL(pdfBlob);
+    const tempFileURL = URL.createObjectURL(pdfBlob);
+    
+    // Create a temporary link element to download the PDF
     const link = document.createElement('a');
-    link.href = url;
+    link.href = tempFileURL;
     link.download = `${fileName}.pdf`;
+    document.body.appendChild(link);
     link.click();
-
-    URL.revokeObjectURL(url);
-
+    document.body.removeChild(link);
+    
+    // Release the blob URL after download
+    URL.revokeObjectURL(tempFileURL);
+    
     if (confirm('¿Deseas enviar correo para la recepción de tus evidencias?')) {
-
         showSpinner();
         try {
             await sendPdfByEmail(pdfBlob, fileName);
             hideSpinner();
-            const url = URL.createObjectURL(pdfBlob);
-            window.open(url);
         } catch (e) {
-            alert('Hubo un error al enviar el correo.');
             hideSpinner();
         }
-
     }
 }
 
@@ -245,7 +244,7 @@ async function sendPdfByEmail(pdfBlob, fileName) {
     const urlDevelopment = `https://localhost:7090/api/v1/Email/SendEmail?subject=${fileName}`;
     const formData = new FormData();
     formData.append('file', pdfBlob, `${fileName}.pdf`);
-    fetch(urlProduction, {
+    await fetch(urlProduction, {
         method: 'POST',
         body: formData,
         mode: 'no-cors'
