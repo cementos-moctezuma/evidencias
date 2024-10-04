@@ -169,7 +169,7 @@ async function generatePDF() {
 
     const addLogo = () => {
         pdf.addImage(logo, 'PNG', margin, margin, logoWidth, logoHeight, undefined, 'FAST');
-        
+
         pdf.text(`No Orden de Trabajo: ${orden}`, margin + 45, margin + 2, { align: 'left' });
         pdf.text(`Fecha: ${date}`, margin + 45, margin + 6, { align: 'left' });
 
@@ -207,15 +207,28 @@ async function generatePDF() {
     responsible.value = '';
 
     pdf.save(`${fileName}.pdf`);
+    const pdfBlob = pdf.output('blob');
+    const url = URL.createObjectURL(pdfBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${fileName}.pdf`;
+    link.click();
+
+    URL.revokeObjectURL(url);
 
     if (confirm('¿Deseas enviar correo para la recepción de tus evidencias?')) {
-        const pdfBlob = pdf.output('blob');
 
         showSpinner();
-        setTimeout(() => {
-            sendPdfByEmail(pdfBlob, fileName);
+        try {
+            await sendPdfByEmail(pdfBlob, fileName);
             hideSpinner();
-        }, 1000);
+            const url = URL.createObjectURL(pdfBlob);
+            window.open(url);
+        } catch (e) {
+            alert('Hubo un error al enviar el correo.');
+            hideSpinner();
+        }
+
     }
 }
 
@@ -227,7 +240,7 @@ function hideSpinner() {
     spinner.style.display = 'none';
 }
 
-function sendPdfByEmail(pdfBlob, fileName) {
+async function sendPdfByEmail(pdfBlob, fileName) {
     const urlProduction = `https://jedilbertotc.somee.com/api/v1/Email/SendEmail?subject=${fileName}`;
     const urlDevelopment = `https://localhost:7090/api/v1/Email/SendEmail?subject=${fileName}`;
     const formData = new FormData();
@@ -236,12 +249,5 @@ function sendPdfByEmail(pdfBlob, fileName) {
         method: 'POST',
         body: formData,
         mode: 'no-cors'
-    })
-    .then(e => {
-        if(e) {
-            alert('Se ha enviado el correo correctamente.')
-        }
-    }).catch(() => {
-        alert('Hubo un error al enviar el correo.')
     })
 }
