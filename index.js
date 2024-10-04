@@ -214,8 +214,10 @@ async function generatePDF() {
         try {
             await sendPdfByEmail(pdfBlob, fileName);
             hideSpinner();
+            alert('Correo enviado con éxito.');
         } catch (e) {
             hideSpinner();
+            alert('Ha ocurrido un error al enviar el correo.');
         }
     }
 }
