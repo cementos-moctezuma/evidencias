@@ -239,5 +239,5 @@ async function sendPdfByEmail(pdfBlob, fileName) {
         method: 'POST',
         body: formData,
         mode: 'no-cors'
-    })
+    }).then()
 }
