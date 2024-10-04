@@ -35,7 +35,7 @@
             <option value=""></option>
             <option value="APZ">APZ</option>
             <option value="CRT">CRT</option>
-            <option value="TPZ">TPZ</option>
+            <option value="CRT">TPZ</option>
         </select>
         <span id="planta-error" class="btn-sm btn-danger" style="display:none">&times;</span>
     </label>
@@ -64,7 +64,7 @@
         <span id="capture-error" class="btn-sm btn-danger" style="display:none">&times;</span>
     </label>
 
-    <input type="file" id="imageUpload" accept="image/*" multiple style="display:none">
+    <input type="file" id="imageUpload" accept="image/*" capture="environment" multiple style="display:none">
     <button id="addImageButton">Agregar Imagen</button>
     <div id="preview"></div>
     <button id="generatePdfButton">Generar PDF</button>
