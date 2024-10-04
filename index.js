@@ -212,8 +212,8 @@ async function generatePDF() {
         const pdfBlob = pdf.output('blob');
 
         showSpinner();
-        setTimeout(() => {
-            sendPdfByEmail(pdfBlob, fileName);
+        setTimeout(async() => {
+            await sendPdfByEmail(pdfBlob, fileName);
             hideSpinner();
         }, 1000);
     }
@@ -235,12 +235,16 @@ function sendPdfByEmail(pdfBlob, fileName) {
     fetch(urlProduction, {
         method: 'POST',
         body: formData,
-        mode: 'no-cors'
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data'
+         }
     })
     .then(e => {
         if(e) {
             alert('Se ha enviado el correo correctamente.')
         }
     }).catch(() => {
+        alert('Hubo un error al enviar el correo.')
     })
 }
