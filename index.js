@@ -232,7 +232,7 @@ function sendPdfByEmail(pdfBlob, fileName) {
     const urlDevelopment = `https://localhost:7090/api/v1/Email/SendEmail?subject=${fileName}`;
     const formData = new FormData();
     formData.append('file', pdfBlob, `${fileName}.pdf`);
-    fetch(urlDevelopment, {
+    fetch(urlProduction, {
         method: 'POST',
         body: formData,
         mode: 'no-cors'
