@@ -206,21 +206,10 @@ async function generatePDF() {
     company.value = '';
     responsible.value = '';
 
-    const pdfBlob = pdf.output('blob');
-    const tempFileURL = URL.createObjectURL(pdfBlob);
-    
-    // Create a temporary link element to download the PDF
-    const link = document.createElement('a');
-    link.href = tempFileURL;
-    link.download = `${fileName}.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    // Release the blob URL after download
-    URL.revokeObjectURL(tempFileURL);
-    
+    pdf.save(`${fileName}.pdf`);
+
     if (confirm('¿Deseas enviar correo para la recepción de tus evidencias?')) {
+        const pdfBlob = pdf.output('blob');
         showSpinner();
         try {
             await sendPdfByEmail(pdfBlob, fileName);
