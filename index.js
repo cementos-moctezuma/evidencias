@@ -212,8 +212,8 @@ async function generatePDF() {
         const pdfBlob = pdf.output('blob');
 
         showSpinner();
-        setTimeout(async() => {
-            await sendPdfByEmail(pdfBlob, fileName);
+        setTimeout(() => {
+            sendPdfByEmail(pdfBlob, fileName);
             hideSpinner();
         }, 1000);
     }
